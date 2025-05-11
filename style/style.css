@@ -27,7 +27,7 @@ html, body {
 
 .top {
     display: grid;
-    grid-template: 100px / 90px 10px 120px;
+    grid-template: 100px / 90px 10px 140px;
     justify-content: center;
     align-items: center;
     margin-bottom: 50px;
