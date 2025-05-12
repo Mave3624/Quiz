@@ -12,6 +12,7 @@
     font-weight: normal;
     font-style: normal;
 }
+
 * {
     border: none;
     box-sizing: border-box;
@@ -132,10 +133,12 @@ button {
 .action {
     display: grid;
     grid-template: 100% / 1fr 1fr;
-    gap: 5px;
+    gap: 10px;
 }
 
-svg {
-    width: 30px;
-    fill: rgb(0, 0, 0);
+.action > button {
+    font-family: monospace;
+    font-weight: 700;
+    font-size: 15px;
+    
 }
