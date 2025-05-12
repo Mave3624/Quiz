@@ -189,33 +189,35 @@ const logic = (function() {
         Dom.D.textContent = Question.QuestionArray[num].QuestionOptionD
     }
     process(0)
-     
+
+    let Score = 0
     let num = 0
+
     Dom.Options.forEach((element, index) => {
         element.addEventListener("click", () => {
-            num++
-        if (num >= 19) {
-            num = 19
+        Question.QuestionArray[num].QuestionUserAnswer = element.lastChild.textContent
+
+        if (Question.QuestionArray[num].QuestionUserAnswer === Question.QuestionArray[num].QuestionCorrectAnswer) {
+            Score++
         }
+            num++
+        if (num >= 19) num = 19
             process(num)
         })
     })
 
     Dom.Previous.addEventListener('click', () => {
         num--
-        if (num <= 0) {
-            num = 0
-        }
+        if (num <= 0) num = 0
+        if(Question.QuestionArray[num].QuestionUserAnswer === Question.QuestionArray[num].QuestionCorrectAnswer) Score--
         process(num)
     })
 
     Dom.Next.addEventListener('click', () => {
         num++
-        if (num >= 19) {
-            num = 19
-        }
+        if (num >= 19) num = 19
         process(num)
     })
 
-    return { process, }
+    return { process, Score,}
 })()
