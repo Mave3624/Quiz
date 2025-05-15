@@ -3,6 +3,7 @@ const Dom = (function() {
     const Options = document.querySelectorAll(".answers-options>button")
     const Actions = document.querySelector(".action")
     const AllOptions = document.querySelector(".answers-options")
+    const Title = document.querySelector('.question > h2')
     
     const A = document.querySelector("#option-a")
     const B = document.querySelector("#option-b")
@@ -31,7 +32,7 @@ const Dom = (function() {
     Front.setAttribute("class", "Front")
     Front.textContent = "Front"
 
-    return { Board, Options, Previous, Next, A, B, C, D, AllOptions, Submit, Front, Back}
+    return { Board, Options, Previous, Next, A, B, C, D, AllOptions, Submit, Front, Back, Title}
 })()
 
 const Question = ( function() {
@@ -223,7 +224,7 @@ const logic = (function() {
         if (Question.QuestionArray[num].QuestionUserAnswer !== Question.QuestionArray[num].QuestionCorrectAnswer && Dom.C.textContent === Question.QuestionArray[num].QuestionUserAnswer ) {
             Dom.Options[2].style.border = "1px solid red"
         }
-        if (Question.QuestionArray[num].QuestionUserAnswer !== Question.QuestionArray[num].QuestionCorrectAnswer && Dom.textContent === Question.QuestionArray[num].QuestionUserAnswer ) {
+        if (Question.QuestionArray[num].QuestionUserAnswer !== Question.QuestionArray[num].QuestionCorrectAnswer && Dom.D.textContent === Question.QuestionArray[num].QuestionUserAnswer ) {
             Dom.Options[3].style.border = "1px solid red"
         }
 
@@ -254,7 +255,6 @@ const logic = (function() {
         if (Question.QuestionArray[num].QuestionUserAnswer === Question.QuestionArray[num].QuestionCorrectAnswer) {
             Score++
         }
-        console.log(Question.QuestionArray[num])
         
         if (num === (QuestionArray.length - 1)) {
             Dom.Next.remove()
@@ -266,6 +266,7 @@ const logic = (function() {
                 })
             Dom.Submit.remove()
             Dom.Previous.remove()
+            Dom.Title.textContent = 'Solution'
             document.querySelector('.action').appendChild(Dom.Back)
             document.querySelector('.action').appendChild(Dom.Front)
             num = 0
@@ -285,15 +286,14 @@ const logic = (function() {
         if (num <= 0) num = 0
         if(Question.QuestionArray[num].QuestionUserAnswer === Question.QuestionArray[num].QuestionCorrectAnswer) Score--
         process(num)
-        if (num < 20 && num > 18) {
-            console.log("now")
+        if (num === Question.QuestionArray.length - 2) {
             Dom.Submit.remove()
             document.querySelector('.action').appendChild(Dom.Next)
         }
     })
 
     Dom.Next.addEventListener('click', () => {
-        if (num === (QuestionArray.length - 1)) {
+        if (num === (QuestionArray.length - 2)) {
             Dom.Next.remove()
             document.querySelector('.action').appendChild(Dom.Submit)
 
@@ -303,6 +303,7 @@ const logic = (function() {
                 })
             Dom.Submit.remove()
             Dom.Previous.remove()
+            Dom.Title.textContent = 'Solution'
             document.querySelector('.action').appendChild(Dom.Back)
             document.querySelector('.action').appendChild(Dom.Front)
             num = 0
@@ -317,7 +318,6 @@ const logic = (function() {
     })
 
     Dom.Back.addEventListener("click", () => {
-        console.log("We Are Here")
         num--
         if(num < 0) num = 19
         solution()
