@@ -142,3 +142,6 @@ button {
     font-size: 15px;
     
 }
+:disabled {
+    color: red;
+}
