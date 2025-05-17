@@ -2,7 +2,6 @@ const Dom = (function() {
     const Board = document.querySelector(".question-text > p")
     const Options = document.querySelectorAll(".answers-options>button")
     const Actions = document.querySelector(".action")
-    const AllOptions = document.querySelector(".answers-options")
     const Title = document.querySelector('.question > h2')
     
     const A = document.querySelector("#option-a")
@@ -32,7 +31,7 @@ const Dom = (function() {
     Front.setAttribute("class", "Front")
     Front.textContent = "Front"
 
-    return { Board, Options, Previous, Next, A, B, C, D, AllOptions, Submit, Front, Back, Title}
+    return { Board, Options, Previous, Next, A, B, C, D, Submit, Front, Back, Title, Actions}
 })()
 
 const Question = ( function() {
@@ -196,8 +195,7 @@ QuestionArray = [
     QuestionOptionC: "Video Assistant Referee",
     QuestionOptionD: "Verified Action Review",
     QuestionCorrectAnswer: "Video Assistant Referee"
-}
-];
+}];
     return { QuestionArray }
 })()
 
@@ -215,50 +213,40 @@ const logic = (function() {
         Dom.Options.forEach((element) => {
         element.style.border = "none"})
         process(num)
-        if (Question.QuestionArray[num].QuestionUserAnswer !== Question.QuestionArray[num].QuestionCorrectAnswer && Dom.A.textContent === Question.QuestionArray[num].QuestionUserAnswer ) {
-            Dom.Options[0].style.border = "1px solid red"
-        }
-        if (Question.QuestionArray[num].QuestionUserAnswer !== Question.QuestionArray[num].QuestionCorrectAnswer && Dom.B.textContent === Question.QuestionArray[num].QuestionUserAnswer ) {
-            Dom.Options[1].style.border = "1px solid red"
-        }
-        if (Question.QuestionArray[num].QuestionUserAnswer !== Question.QuestionArray[num].QuestionCorrectAnswer && Dom.C.textContent === Question.QuestionArray[num].QuestionUserAnswer ) {
-            Dom.Options[2].style.border = "1px solid red"
-        }
-        if (Question.QuestionArray[num].QuestionUserAnswer !== Question.QuestionArray[num].QuestionCorrectAnswer && Dom.D.textContent === Question.QuestionArray[num].QuestionUserAnswer ) {
-            Dom.Options[3].style.border = "1px solid red"
-        }
 
-        if (Dom.A.textContent === Question.QuestionArray[num].QuestionCorrectAnswer) {
-            Dom.Options[0].style.border = "1px solid green"
-        }
-        if (Dom.B.textContent === Question.QuestionArray[num].QuestionCorrectAnswer) {
-            Dom.Options[1].style.border = "1px solid green"
-        }
-        if (Dom.C.textContent === Question.QuestionArray[num].QuestionCorrectAnswer) {
-            Dom.Options[2].style.border = "1px solid green"
-        }
-        if (Dom.D.textContent === Question.QuestionArray[num].QuestionCorrectAnswer) {
-            Dom.Options[3].style.border = "1px solid green"
-        }
+        Dom.Options.forEach((element) => {
+            if(Question.QuestionArray[num].QuestionUserAnswer !== Question.QuestionArray[num].QuestionCorrectAnswer && element.lastChild.textContent === Question.QuestionArray[num].QuestionUserAnswer){
+                element.style.border = "1px solid red"
+            }
+            else if (Question.QuestionArray[num].QuestionUserAnswer === Question.QuestionArray[num].QuestionCorrectAnswer && element.lastChild.textContent === Question.QuestionArray[num].QuestionUserAnswer){
+                element.style.border = "1px solid blue"
+            }
+            else if (element.lastChild.textContent === Question.QuestionArray[num].QuestionCorrectAnswer && element.lastChild.textContent !== Question.QuestionArray[num].QuestionUserAnswer) {
+                element.style.border = "1px solid green"
+            }
+        })
     }
 
-    let Score = 0
+    const Selected = function() {
+        Dom.Options.forEach((element) => {
+            element.style.border = 'none'
+            if (element.lastChild.textContent === Question.QuestionArray[num].QuestionUserAnswer) {
+                element.style.border = "1px solid gray"
+            }
+        })
+
+    }
+
     let num = 0
 
     Dom.Options.forEach((element) => {
         element.addEventListener("click", () => {
-        console.log(num)
+            Selected()
         Question.QuestionArray[num].QuestionUserAnswer = element.lastChild.textContent
-        if (!('QuestionAnswerStatus' in Question.QuestionArray[num])) {
-            Question.QuestionArray[num].QuestionAnswerStatus = "Answered"
-        }
-        if (Question.QuestionArray[num].QuestionUserAnswer === Question.QuestionArray[num].QuestionCorrectAnswer) {
-            Score++
-        }
         
         if (num === (QuestionArray.length - 1)) {
             Dom.Next.remove()
-            document.querySelector('.action').appendChild(Dom.Submit)
+            Dom.Actions.appendChild(Dom.Submit)
 
             Dom.Submit.addEventListener("click", () => {
                 Dom.Options.forEach((element) => {
@@ -267,8 +255,9 @@ const logic = (function() {
             Dom.Submit.remove()
             Dom.Previous.remove()
             Dom.Title.textContent = 'Solution'
-            document.querySelector('.action').appendChild(Dom.Back)
-            document.querySelector('.action').appendChild(Dom.Front)
+            Dom.Actions.appendChild(Dom.Back)
+            Dom.Actions.appendChild(Dom.Front)
+            
             num = 0
             solution()
             num++
@@ -276,7 +265,7 @@ const logic = (function() {
         }
 
         num++
-        if(num > 19) num = 19
+        if(num > QuestionArray.length - 1) num = (QuestionArray.length - 1)
         process(num)
         })
     })
@@ -290,6 +279,7 @@ const logic = (function() {
             Dom.Submit.remove()
             document.querySelector('.action').appendChild(Dom.Next)
         }
+        Selected()
     })
 
     Dom.Next.addEventListener('click', () => {
@@ -313,21 +303,20 @@ const logic = (function() {
         }
 
         num++
-        if (num >= 19) num = 19
+        if (num >= QuestionArray.length - 1) num = 19
         process(num)
+        Selected()
     })
 
     Dom.Back.addEventListener("click", () => {
         num--
-        if(num < 0) num = 19
+        if(num < 0) num = QuestionArray.length - 1
         solution()
     })
 
     Dom.Front.addEventListener('click', () => {
         num++
-        if(num > 19) num = 0
+        if(num > QuestionArray.length - 1) num = 0
         solution()
     })
-
-    return {Score,}
 })()

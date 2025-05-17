@@ -19,6 +19,7 @@
     padding: 0px;
     margin: 0px;
 }
+
 html, body {
     background-color: gray;
     width: 100%;
@@ -118,7 +119,7 @@ html, body {
     justify-content: center;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 16px;
-    color: rgb(18, 82, 17);
+    color: rgb(53, 66, 85);
     font-weight: 600;
 }
 
@@ -143,5 +144,11 @@ button {
     
 }
 :disabled {
-    color: red;
+    background-color: rgb(188, 188, 188);
+    box-shadow: none;
+    border: none;
+}
+
+button:active {
+    box-shadow: 1px 1px 5px 1px rgb(56, 55, 55);
 }
