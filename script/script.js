@@ -272,14 +272,16 @@ const logic = (function() {
 
     Dom.Previous.addEventListener('click', () => {
         num--
+        console.log(num)
         if (num <= 0) num = 0
-        if(Question.QuestionArray[num].QuestionUserAnswer === Question.QuestionArray[num].QuestionCorrectAnswer) Score--
+//        if(Question.QuestionArray[num].QuestionUserAnswer === Question.QuestionArray[num].QuestionCorrectAnswer) Score--
         process(num)
         if (num === Question.QuestionArray.length - 2) {
             Dom.Submit.remove()
             document.querySelector('.action').appendChild(Dom.Next)
         }
         Selected()
+        console.log(num)
     })
 
     Dom.Next.addEventListener('click', () => {
