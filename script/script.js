@@ -25,11 +25,11 @@ const Dom = (function() {
 
     const Back = document.createElement('button')
     Back.setAttribute("class", "Back")
-    Back.textContent = "Back"
+    Back.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Backward</title><path d="M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M18,11H10L13.5,7.5L12.08,6.08L6.16,12L12.08,17.92L13.5,16.5L10,13H18V11Z" /></svg>'
 
     const Front = document.createElement('button')
     Front.setAttribute("class", "Front")
-    Front.textContent = "Front"
+    Front.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Forward</title><path d="M22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12M6,13H14L10.5,16.5L11.92,17.92L17.84,12L11.92,6.08L10.5,7.5L14,11H6V13Z" /></svg>'
 
     return { Board, Options, Previous, Next, A, B, C, D, Submit, Front, Back, Title, Actions}
 })()

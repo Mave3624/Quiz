@@ -143,12 +143,18 @@ button {
     font-size: 15px;
     
 }
-:disabled {
-    background-color: rgb(188, 188, 188);
+.answers-options >:disabled {
+    background-color: rgb(176, 184, 210);
     box-shadow: none;
     border: none;
 }
 
 button:active {
-    box-shadow: 1px 1px 5px 1px rgb(56, 55, 55);
+    box-shadow: 0px 0px 4px 1px rgb(56, 55, 55);
+}
+
+svg {
+    width: 30px;
+    height: 30px;
+    fill: rgb(17, 76, 112);
 }
